@@ -622,6 +622,10 @@ public class NGTGUI_1 extends javax.swing.JFrame {
     private void btnPlayCrosswordActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnPlayCrosswordActionPerformed
         // read the CrosswordTile[][] board from a file
         CrosswordTile[][] board = readCrossword();
+        if (board == null) {
+            JOptionPane.showMessageDialog(null, "Unable to load crossword puzzle data.", "Crossword Error", JOptionPane.ERROR_MESSAGE);
+            return;
+        }
         // create a new MiniCrosswordFrame using that board
         MiniCrosswordFrame myFrame = new MiniCrosswordFrame(board);
 
@@ -788,7 +792,7 @@ public class NGTGUI_1 extends javax.swing.JFrame {
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new NGTGUI().setVisible(true);
+                new NGTGUI_1().setVisible(true);
             }
         });
     }

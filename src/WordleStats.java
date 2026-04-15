@@ -128,93 +128,98 @@ public class WordleStats {
      * @param fileName - name of the file
      */
     public void saveToFile() {
-        try {
-            PrintWriter writer = new PrintWriter(new FileWriter(selectedFile));
+        saveToFile(selectedFile);
+    }
+
+    public void saveToFile(File file) {
+        if (file == null) {
+            return;
+        }
+
+        try (PrintWriter writer = new PrintWriter(new FileWriter(file))) {
             writer.println(gamesPlayed);
             writer.println(gamesWon);
             for (int i = 0; i < guessDistribution.size(); i++) {
                 writer.println(guessDistribution.get(i));
             }
-            writer.close();
-
+            selectedFile = file;
+            fileAlreadyChosen = true;
         } catch (IOException e) {
             JOptionPane.showMessageDialog(null, e);
         }
     }
 
     public void loadFromFile() {
-        try {
-            
-            if (!fileAlreadyChosen){
-
-            //create an instance of JFileChooser
-            JFileChooser fileChooser = new JFileChooser();
-
-            //set title
-            fileChooser.setDialogTitle("Select or Create a Wordle Stats File");
-
-            //allow users to select existing files
-            fileChooser.setFileSelectionMode(JFileChooser.FILES_ONLY);
-
-            boolean validFileSelected = false;
-            selectedFile = null;
-
-            int userSelection = fileChooser.showOpenDialog(null);
-
-            if (userSelection == JFileChooser.APPROVE_OPTION) {
-                selectedFile = fileChooser.getSelectedFile();
-
-                //if file chosen is valid
-                if (selectedFile.exists()) {
-                    validFileSelected = true;
-                    //display confirmation message
-                    JOptionPane.showMessageDialog(null, "File chosen successfully.");
-                    fileAlreadyChosen = true;
-
-                } else {
-                    //allow user to choose to make a new file
-                    //if the file doesn't exist, create it for the user
-                    int confirm = JOptionPane.showConfirmDialog(null, "File does not exist. Would you like to create it?", "Create File", JOptionPane.YES_NO_OPTION);
-                    if (confirm == JOptionPane.YES_OPTION) {
-                        if (selectedFile.createNewFile()) {
-                            JOptionPane.showMessageDialog(null, "New file created successfully.");
-                            fileAlreadyChosen=true;
-
-                        }
-                    }
-                }
-
-                if (validFileSelected) {
-                    //read the file the user chose
-                    InputStream wordleStats = new FileInputStream(selectedFile);
-
-                    //initialize scanner
-                    Scanner sc = new Scanner(wordleStats);
-
-                    if (sc.hasNextLine()) {
-                        //read the first line (total number of games played)
-                        gamesPlayed = Integer.parseInt(sc.nextLine());
-                        //read the second line (total number of wins)
-                        gamesWon = Integer.parseInt(sc.nextLine());
-                        //the third line and on are the number of guesses each win took
-                        while (sc.hasNextLine()) {
-                            guessDistribution.add(Integer.valueOf(sc.nextLine()));
-                        }
-
-                    }
-                }
-
-            } else {
-                //if user denies new file creation
-                JOptionPane.showMessageDialog(null, "File selection Canceled");
-
-            }
-            }
-
-        } catch (IOException e) {
-            System.out.println(e);
+        if (fileAlreadyChosen && selectedFile != null) {
+            loadFromFile(selectedFile);
+            return;
         }
 
+        //create an instance of JFileChooser
+        JFileChooser fileChooser = new JFileChooser();
+
+        //set title
+        fileChooser.setDialogTitle("Select or Create a Wordle Stats File");
+
+        //allow users to select existing files
+        fileChooser.setFileSelectionMode(JFileChooser.FILES_ONLY);
+
+        int userSelection = fileChooser.showOpenDialog(null);
+
+        if (userSelection == JFileChooser.APPROVE_OPTION) {
+            File chosenFile = fileChooser.getSelectedFile();
+            if (chosenFile.exists()) {
+                JOptionPane.showMessageDialog(null, "File chosen successfully.");
+                loadFromFile(chosenFile);
+            } else {
+                int confirm = JOptionPane.showConfirmDialog(null, "File does not exist. Would you like to create it?", "Create File", JOptionPane.YES_NO_OPTION);
+                if (confirm == JOptionPane.YES_OPTION) {
+                    try {
+                        if (chosenFile.createNewFile()) {
+                            JOptionPane.showMessageDialog(null, "New file created successfully.");
+                            selectedFile = chosenFile;
+                            fileAlreadyChosen = true;
+                        }
+                    } catch (IOException e) {
+                        JOptionPane.showMessageDialog(null, e);
+                    }
+                }
+            }
+        } else {
+            JOptionPane.showMessageDialog(null, "File selection Canceled");
+        }
+
+    }
+
+    public void loadFromFile(File file) {
+        if (file == null) {
+            return;
+        }
+
+        try (InputStream wordleStats = new FileInputStream(file); Scanner sc = new Scanner(wordleStats)) {
+            // reset before loading to avoid duplicate aggregation on repeated loads
+            gamesPlayed = 0;
+            gamesWon = 0;
+            guessDistribution.clear();
+
+            if (sc.hasNextLine()) {
+                gamesPlayed = Integer.parseInt(sc.nextLine().trim());
+            }
+            if (sc.hasNextLine()) {
+                gamesWon = Integer.parseInt(sc.nextLine().trim());
+            }
+            while (sc.hasNextLine()) {
+                String line = sc.nextLine().trim();
+                if (!line.isEmpty()) {
+                    guessDistribution.add(Integer.valueOf(line));
+                }
+            }
+
+            selectedFile = file;
+            fileAlreadyChosen = true;
+        } catch (IOException | NumberFormatException e) {
+            JOptionPane.showMessageDialog(null, e);
+        }
     }
 
     /**

@@ -60,12 +60,6 @@ public class WordleGame {
             TARGET[i] = new WordleTile(targetWord.substring(i, i + 1));
         }
 
-        //TESTING PURPOSES (reveals correct wordle)
-        System.out.print("Wordle Answer: ");
-        for (int i = 0; i < 5; i++) {
-            System.out.print(TARGET[i].getLetter());
-        }
-
         //Start a empty 6x5 grid/board (create "letterless" tiles)
         grid = new WordleTile[6][5];
         for (int row = 0; row < 6; row++) {
@@ -356,18 +350,17 @@ public class WordleGame {
         for (int i = 0; i < 5; i++) {
             //counts the number of times a particular letter appears in the target
             int count = 0;
-            //current 
             String letter = TARGET[i].getLetter();
             for (int a = 0; a < 5; a++) {
                 //if this letter appears in the target, increase the count by 1
-                if (targetLetters[i].equalsIgnoreCase(letter)) {
+                if (targetLetters[a].equalsIgnoreCase(letter)) {
                     count++;
                 }
             }
 
             //after iterating through the whole target word, if count is greater than 1
-            //the letter appears more than once 
-            if (count > 1) {
+            //the letter appears more than once
+            if (count > 1 && !duplicates.contains(letter)) {
                 duplicates.add(letter);
             }
         }

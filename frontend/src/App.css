@@ -1,0 +1,337 @@
+.app {
+  min-height: 100vh;
+  background: #f8f8f8;
+  color: #1a1a1b;
+}
+
+.topbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1rem 1.25rem;
+  border-bottom: 1px solid #ddd;
+  background: #fff;
+}
+
+.topbar h1 {
+  margin: 0;
+  font-size: 1.4rem;
+}
+
+.subtitle {
+  margin: 0.25rem 0 0;
+  color: #666;
+  font-size: 0.9rem;
+}
+
+.topbar-actions {
+  display: flex;
+  gap: 0.5rem;
+}
+
+.topbar-actions button,
+.game-nav button,
+.key {
+  border: 1px solid #c8c8c8;
+  background: #fff;
+  border-radius: 6px;
+  padding: 0.55rem 0.8rem;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.game-shell {
+  display: grid;
+  grid-template-columns: 260px 1fr;
+  gap: 1rem;
+  padding: 1rem;
+}
+
+.game-nav {
+  background: #fff;
+  border: 1px solid #e1e1e1;
+  border-radius: 8px;
+  padding: 1rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.6rem;
+}
+
+.game-nav button {
+  text-align: left;
+}
+
+.game-nav button.active {
+  border-color: #3a3a3c;
+}
+
+.game-nav button:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+.note {
+  font-size: 0.85rem;
+  color: #666;
+}
+
+.stats-card {
+  margin-top: 0.5rem;
+  padding-top: 0.5rem;
+  border-top: 1px solid #ececec;
+}
+
+.stats-card h3 {
+  margin: 0 0 0.5rem;
+}
+
+.stats-card p {
+  margin: 0.2rem 0;
+}
+
+.wordle-panel {
+.crossword-panel,
+.connections-panel {
+  background: #fff;
+  border: 1px solid #e1e1e1;
+  border-radius: 8px;
+  padding: 1rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.panel-head {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 0.5rem;
+}
+
+.panel-head h2,
+.panel-head p {
+  margin: 0;
+}
+
+.board {
+  display: grid;
+  gap: 0.35rem;
+}
+
+.row {
+  display: grid;
+  grid-template-columns: repeat(5, 56px);
+  gap: 0.35rem;
+}
+
+.tile {
+  width: 56px;
+  height: 56px;
+  border: 2px solid #d3d6da;
+  display: grid;
+  place-items: center;
+  font-size: 1.6rem;
+  font-weight: 700;
+  text-transform: uppercase;
+}
+
+.tile.correct,
+.key.correct {
+  background: #6aaa64;
+  border-color: #6aaa64;
+  color: #fff;
+}
+
+.tile.present,
+.key.present {
+  background: #c9b458;
+  border-color: #c9b458;
+  color: #fff;
+}
+
+.tile.absent,
+.key.absent {
+  background: #787c7e;
+  border-color: #787c7e;
+  color: #fff;
+}
+
+.status {
+  margin: 0.8rem 0;
+  min-height: 1.25rem;
+  font-weight: 600;
+}
+
+.keyboard {
+  display: flex;
+  flex-direction: column;
+  gap: 0.35rem;
+}
+
+.keyboard-row {
+  display: flex;
+  justify-content: center;
+  gap: 0.3rem;
+}
+
+.key {
+  min-width: 34px;
+  padding: 0.55rem 0.45rem;
+  border-color: #d3d6da;
+  background: #d3d6da;
+}
+
+.key.wide {
+  min-width: 86px;
+}
+
+.crossword-layout {
+  width: 100%;
+  display: grid;
+  grid-template-columns: minmax(320px, 560px) minmax(220px, 1fr);
+  gap: 1rem;
+  align-items: start;
+}
+
+.crossword-grid {
+  display: grid;
+  gap: 2px;
+  background: #222;
+  border: 2px solid #222;
+}
+
+.cw-cell {
+  position: relative;
+  border: none;
+  min-width: 0;
+  aspect-ratio: 1 / 1;
+  background: #fff;
+  cursor: pointer;
+}
+
+.cw-cell.black {
+  background: #000;
+  cursor: not-allowed;
+}
+
+.cw-cell.selected {
+  background: #e6dfb0;
+}
+
+.cw-cell.active-path {
+  background: #d8edf7;
+}
+
+.cw-cell.black.active-path,
+.cw-cell.black.selected {
+  background: #000;
+}
+
+.cw-letter {
+  position: absolute;
+  inset: 0;
+  display: grid;
+  place-items: center;
+  font-size: 1.25rem;
+  font-weight: 700;
+}
+
+.cw-clue-num {
+  position: absolute;
+  top: 2px;
+  left: 3px;
+  font-size: 0.62rem;
+  font-weight: 700;
+}
+
+.clues-panel {
+  width: 100%;
+  max-height: 580px;
+  overflow: auto;
+  border: 1px solid #ececec;
+  border-radius: 8px;
+  padding: 0.75rem;
+  background: #fafafa;
+}
+
+.clues-panel h3 {
+  margin: 0.35rem 0 0.5rem;
+}
+
+.clues-panel p {
+  margin: 0.3rem 0;
+  font-size: 0.92rem;
+}
+
+.active-clue {
+  background: #d8edf7;
+  border-radius: 4px;
+  padding: 0.2rem 0.3rem;
+}
+
+.connections-solved {
+  width: 100%;
+  display: grid;
+  gap: 0.5rem;
+  margin-bottom: 0.75rem;
+}
+
+.connection-group {
+  border-radius: 8px;
+  padding: 0.65rem 0.8rem;
+}
+
+.connection-group p {
+  margin: 0.3rem 0 0;
+}
+
+.connections-grid {
+  width: 100%;
+  display: grid;
+  grid-template-columns: repeat(4, minmax(120px, 1fr));
+  gap: 0.5rem;
+}
+
+.connection-tile {
+  border: 1px solid #c8c8c8;
+  border-radius: 6px;
+  background: #f0ece4;
+  min-height: 64px;
+  padding: 0.6rem;
+  font-weight: 700;
+  cursor: pointer;
+  text-align: center;
+}
+
+.connection-tile.selected {
+  background: #5a594e;
+  color: #fff;
+}
+
+.connections-actions {
+  margin-top: 0.85rem;
+}
+
+.connections-actions button {
+  border: 1px solid #c8c8c8;
+  background: #fff;
+  border-radius: 6px;
+  padding: 0.55rem 0.8rem;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+@media (max-width: 900px) {
+  .game-shell {
+    grid-template-columns: 1fr;
+  }
+
+  .crossword-layout {
+    grid-template-columns: 1fr;
+  }
+
+  .connections-grid {
+    grid-template-columns: repeat(2, minmax(120px, 1fr));
+  }
+}
