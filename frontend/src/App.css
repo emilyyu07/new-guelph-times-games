@@ -2,6 +2,7 @@
   min-height: 100vh;
   background: #f8f8f8;
   color: #1a1a1b;
+  font-family: "Iowan Old Style", "Palatino Linotype", Palatino, "Times New Roman", Times, serif;
 }
 
 .topbar {
@@ -11,11 +12,27 @@
   padding: 1rem 1.25rem;
   border-bottom: 1px solid #ddd;
   background: #fff;
+  color: #fff;
 }
 
 .topbar h1 {
   margin: 0;
   font-size: 1.4rem;
+}
+
+.topbar-wordle {
+  background: #6aaa64;
+  border-bottom-color: #5b8f56;
+}
+
+.topbar-crossword {
+  background: #2f6fb0;
+  border-bottom-color: #285e95;
+}
+
+.topbar-connections {
+  background: #7c57c2;
+  border-bottom-color: #6545a6;
 }
 
 .subtitle {
@@ -38,6 +55,10 @@
   padding: 0.55rem 0.8rem;
   font-weight: 600;
   cursor: pointer;
+}
+
+.topbar-actions button {
+  border-color: rgba(255, 255, 255, 0.85);
 }
 
 .game-shell {
@@ -89,7 +110,7 @@
   margin: 0.2rem 0;
 }
 
-.wordle-panel {
+.wordle-panel,
 .crossword-panel,
 .connections-panel {
   background: #fff;
@@ -117,6 +138,7 @@
 .board {
   display: grid;
   gap: 0.35rem;
+  margin: 0 auto;
 }
 
 .row {
